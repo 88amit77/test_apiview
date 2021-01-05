@@ -16,6 +16,8 @@ urlpatterns = [
     #for view all i am using diff viewset
     path('data_apiview/', views.DataAPIView.as_view()),
     path('data_apiview/<int:pk>/', views.DataAPIViewDetail.as_view()),
+    path('hello/', views.AuthViewTest.as_view(), name='hello'),
+
 
 
 ]

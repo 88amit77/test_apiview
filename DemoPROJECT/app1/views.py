@@ -10,6 +10,9 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from rest_framework import status
 from rest_framework.exceptions import NotFound as NotFoundError
+###for auth
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 
 
@@ -122,3 +125,32 @@ class DataAPIViewDetail(APIView):
         data1 = self.get_object(pk)
         data1.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+##auth testing
+# class ExampleView(APIView):
+#     authentication_classes = [SessionAuthentication, BasicAuthentication]
+#     permission_classes = [IsAuthenticated]
+#
+#     def get(self, request, format=None):
+#         content = {
+#             'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+#             'auth': unicode(request.auth),  # None
+#         }
+#         return Response(content)
+###decorator based
+# @api_view(['GET'])
+# @authentication_classes([SessionAuthentication, BasicAuthentication])
+# @permission_classes([IsAuthenticated])
+# def example_view(request, format=None):
+#     content = {
+#         'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+#         'auth': unicode(request.auth),  # None
+#     }
+#     return Response(content)
+
+
+class AuthViewTest(APIView):
+    permission_classes = (IsAuthenticated,)
+    def get(self, request):
+        content = {'message': 'Hello, Amit welcome to DRF AUTH !'}
+        return Response(content)
